@@ -2,6 +2,7 @@ import express from "express"
 import dotenv from 'dotenv'
 import connectDB from "./config/db.js";
 import candidateRoutes from "./routes/candidate.route.js"
+import interviewRoutes from "./routes/interview.route.js"
 import cors from "cors"
 dotenv.config();
 const app = express();
@@ -24,6 +25,7 @@ app.get("/",(req,res)=>{
 })
 
 app.use("/api/candidate/",candidateRoutes)
+app.use("/api/interview/",interviewRoutes)
 
 const port = process.env.PORT || 3000
 

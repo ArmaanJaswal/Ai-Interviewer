@@ -1,26 +1,36 @@
-import { model, Schema } from "mongoose";
-import evaluationSchema from "./evaluation.model";
+import { Schema } from "mongoose";
+import evaluationSchema from "./evaluation.model.js";
 
-const conversationSchema = new Schema({
-    questionNumber:{
-        type:Number,
-        required:true,
+const conversationSchema = new Schema(
+  {
+    questionNumber: {
+      type: Number,
+      required: true,
     },
-    question:{
-        type:String,
-        required:true,
-        trim:true,
+    questionText: {
+      type: String,
+      required: true,
+      trim: true,
     },
-    answer:{
-        type:String,
-        default:"",
-        trim:true,
+    topic: {
+      type: String,
+      trim: true,
     },
-    evaluation:{
-        type:evaluationSchema,
-        default:null,
-    }
-},{_id:false})
+    difficulty: {
+      type: String,
+      enum: ["easy", "medium", "hard"],
+    },
+    answer: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    evaluation: {
+      type: evaluationSchema,
+      default: null,
+    },
+  },
+  { _id: false }
+);
 
-
-export default conversationSchema
+export { conversationSchema };
