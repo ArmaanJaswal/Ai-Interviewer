@@ -26,3 +26,37 @@ export const questionSchema = {
   },
   required: ["questionText", "topic", "difficulty"],
 };
+
+
+export function buildEvaluation({questionText,answer,role}){
+
+  const userPrompt = `The question to the user was ${questionText} and the user answered it as ${answer} and the role for which the interview is being conducted is ${role}`
+  const systemPrompt = `You are a professional technical interviewer.Evaluate the answer according to the given question and the given role.Your output must be within the given output schema`
+
+  const answerSchema ={
+    type:"object",
+    properties:{
+      technical:{
+        type:"number",
+        minimum:0,
+        maximum:10,
+      },
+      communication:{
+        type:"number",
+        minimum:0,
+        maximum:10,
+      },
+      confidence:{
+        type:"number",
+        minimum:0,
+        maximum:10,
+      },
+      feedback:{
+        type:"string",
+      }
+    },
+     required: ["technical", "communication", "confidence","feedback"],
+  }
+
+  return { systemPrompt, userPrompt, answerSchema };
+}
