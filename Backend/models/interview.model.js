@@ -17,7 +17,7 @@ const interviewSessionSchema = new Schema(
       default: [],
     },
     experience: {
-      type: String, // confirm this matches Candidate.model.js — change to Number if needed
+      type: String,
     },
     status: {
       type: String,
@@ -35,6 +35,12 @@ const interviewSessionSchema = new Schema(
     conversation: {
       type: [conversationSchema],
       default: [],
+    },
+    // added — points back to the generated report once interview is completed
+    reportId: {
+      type: Schema.Types.ObjectId,
+      ref: "Report",
+      default: null,
     },
     startedAt: {
       type: Date,
