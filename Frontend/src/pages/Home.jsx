@@ -1,6 +1,6 @@
 import React from "react";
 import CandidateForm from "../components/CandidateForm";
-import interviewImage from "../src/assets/vecteezy_3d-male-character-sitting-on-a-sofa-and-working-on-a-laptop_24387852.png";
+import interviewImage from "../assets/vecteezy_3d-male-character-sitting-on-a-sofa-and-working-on-a-laptop_24387852.png";
 
 const Home = () => {
   return (
