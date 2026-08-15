@@ -64,10 +64,17 @@ export const getInterviewReport = async (req, res) => {
 
     const report = await Report.findOne({ interviewId });
 
+    
     if (!report) {
       return res.status(404).json({ message: "No Report Found" });
     }
-
+    console.log("User plan:", req.user.plan);
+    if(req.user.plan==="free"){
+      return res.status(200).json({
+        overallScore:report.overallScore,
+        recommendation:report.recommendation,
+      })
+    }
     return res.status(200).json(report);
   } catch (error) {
     console.log("Error in getInterviewReport:", error);

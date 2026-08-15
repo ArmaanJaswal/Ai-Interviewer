@@ -6,7 +6,7 @@ import { generateEvaluation } from "../services/evaluationService.js";
 const createInterview = async (req, res) => {
   try {
     const { candidateId } = req.body;
-
+    
     const candidate = await Candidate.findById(candidateId);
     if (!candidate) {
       return res.status(404).json({ message: "Candidate Not Found" });
@@ -41,6 +41,8 @@ const createInterview = async (req, res) => {
 
     await newInterview.save();
 
+    req.user.interviewsUsed += 1;
+   await req.user.save();
     return res.status(201).json({
       interviewId: newInterview._id,
       questionNumber: 1,

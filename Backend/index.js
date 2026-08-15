@@ -3,7 +3,10 @@ import dotenv from 'dotenv'
 import connectDB from "./config/db.js";
 import candidateRoutes from "./routes/candidate.route.js"
 import interviewRoutes from "./routes/interview.route.js"
+import authRoutes from "./routes/auth.route.js"
 import cors from "cors"
+import cookieParser from "cookie-parser";
+
 dotenv.config();
 const app = express();
 
@@ -19,6 +22,7 @@ app.use(
 
 
 app.use(express.json())
+app.use(cookieParser());
 
 app.get("/",(req,res)=>{
     res.send("Server Running")
@@ -26,6 +30,7 @@ app.get("/",(req,res)=>{
 
 app.use("/api/candidate/",candidateRoutes)
 app.use("/api/interview/",interviewRoutes)
+app.use('/api/auth', authRoutes);
 
 const port = process.env.PORT || 3000
 
