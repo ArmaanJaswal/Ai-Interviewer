@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { 
   User, 
   Mic, 
@@ -46,6 +47,7 @@ const SIMULATION_QUESTIONS = [
 ];
 
 const LandingPage = () => {
+  const navigate = useNavigate();
   // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState("candidate"); // "candidate" or "demo"
@@ -150,8 +152,12 @@ const LandingPage = () => {
 
   // Open candidate details modal
   const openModal = (type) => {
-    setModalType(type);
-    setIsModalOpen(true);
+    if (type === "candidate") {
+      navigate("/register");
+    } else {
+      setModalType(type);
+      setIsModalOpen(true);
+    }
   };
 
   // Smooth scroll to sections
@@ -871,48 +877,50 @@ const LandingPage = () => {
             </button>
           </div>
 
-          {/* Card 2: Pro (Featured Card) */}
+          {/* Card 2: Premium (Featured Card) */}
           <div className="bg-[#121212] text-white border border-zinc-800 rounded-3xl p-8 flex flex-col justify-between shadow-xl relative overflow-hidden transform hover:-translate-y-1 transition duration-300">
             <div className="absolute -right-16 -top-16 w-32 h-32 bg-amber-500/10 rounded-full blur-xl"></div>
             
             <div className="flex flex-col text-left">
               <div className="flex justify-between items-center mb-2">
-                <h3 className="text-xl font-bold text-white">Pro</h3>
-                <span className="px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase bg-amber-505 text-black rounded-full">
-                  Most Popular
+                <h3 className="text-xl font-bold text-white">Premium Pack</h3>
+                <span className="px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase bg-amber-500 text-black rounded-full">
+                  Best Value
                 </span>
               </div>
               <div className="flex items-baseline gap-1 my-4">
-                <span className="text-4xl font-extrabold text-white">${prices.pro}</span>
-                <span className="text-sm text-zinc-400">/month</span>
+                <span className="text-4xl font-extrabold text-white">₹179</span>
+                <span className="text-sm text-zinc-400">/ 5 interviews</span>
               </div>
               
-              <ul className="flex flex-col gap-3.5 border-t border-zinc-850 pt-5 mt-4">
+              <ul className="flex flex-col gap-3.5 border-t border-zinc-800 pt-5 mt-4">
                 <li className="flex items-center gap-2.5 text-sm font-semibold text-zinc-300">
                   <Check className="w-4.5 h-4.5 text-amber-500 shrink-0" />
-                  Unlimited interviews
+                  5 Premium AI Interviews
                 </li>
                 <li className="flex items-center gap-2.5 text-sm font-semibold text-zinc-300">
                   <Check className="w-4.5 h-4.5 text-amber-500 shrink-0" />
-                  Full voice mode
+                  Full real-time voice & speech recognition
                 </li>
                 <li className="flex items-center gap-2.5 text-sm font-semibold text-zinc-300">
                   <Check className="w-4.5 h-4.5 text-amber-500 shrink-0" />
-                  Detailed reports
+                  Detailed recruiter evaluation reports
                 </li>
                 <li className="flex items-center gap-2.5 text-sm font-semibold text-zinc-300">
                   <Check className="w-4.5 h-4.5 text-amber-500 shrink-0" />
-                  Priority support
+                  Instant access & seamless checkout
                 </li>
+
               </ul>
             </div>
             <button
               onClick={() => openModal("candidate")}
-              className="w-full mt-8 bg-white hover:bg-zinc-100 text-slate-900 font-bold py-3.5 rounded-xl transition duration-155 cursor-pointer"
+              className="w-full mt-8 bg-amber-600 hover:bg-amber-700 text-white font-bold py-3.5 rounded-xl transition duration-150 cursor-pointer shadow-md"
             >
-              Get Pro
+              Get 5 Interviews (₹179)
             </button>
           </div>
+
 
           {/* Card 3: Enterprise */}
           <div className="bg-white border border-slate-200 rounded-3xl p-8 flex flex-col justify-between shadow-sm hover:shadow-lg transition duration-200">

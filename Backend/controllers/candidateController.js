@@ -11,14 +11,22 @@ const newCandidate =async (req,res)=>{
         }
     
         const newCandidate = new Candidate({
-            name,role,skills,experience
-        })
+            userId: req.user?._id || null,
+            name,
+            role,
+            skills,
+            experience
+        });
         await newCandidate.save();
-        res.status(200).json({message:"User Saved Successfully"})
+        res.status(200).json({
+            message:"User Saved Successfully",
+            candidate: newCandidate
+        })
     }catch(error){
         console.log(error.message)
         res.status(500).json({message:"Internal Server Error"})
     }
 }
+
 
 export default newCandidate

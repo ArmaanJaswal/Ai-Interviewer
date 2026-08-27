@@ -2,6 +2,34 @@ import Interview from "../models/interview.model.js";
 import Report from "../models/report.model.js";
 import { generateReport } from "../services/reportGenerationService.js";
 
+// Helper function to format report payload based on user subscription plan
+const formatReportForPlan = (report, userPlan) => {
+  const isPremium = userPlan === "premium";
+
+  if (!isPremium) {
+    return {
+      _id: report._id,
+      interviewId: report.interviewId,
+      overallScore: report.overallScore,
+      isFullReportUnlocked: false,
+    };
+  }
+
+  return {
+    _id: report._id,
+    interviewId: report.interviewId,
+    overallScore: report.overallScore,
+    technicalSummary: report.technicalSummary,
+    communicationSummary: report.communicationSummary,
+    confidenceSummary: report.confidenceSummary,
+    strengths: report.strengths,
+    weaknesses: report.weaknesses,
+    recommendation: report.recommendation,
+    summary: report.summary,
+    isFullReportUnlocked: true,
+  };
+};
+
 export const generateInterviewReport = async (req, res) => {
   try {
     const interviewId = req.params.id;
@@ -16,15 +44,13 @@ export const generateInterviewReport = async (req, res) => {
       return res.status(400).json({ message: "Interview Not Completed Yet" });
     }
 
-    
     if (interview.reportId !== null) {
       const existingReport = await Report.findById(interview.reportId);
       if (existingReport) {
-        return res.status(200).json(existingReport);
+        return res.status(200).json(formatReportForPlan(existingReport, req.user?.plan));
       }
     }
 
-    
     const reportData = await generateReport({
       role: interview.role,
       skills: interview.skills,
@@ -32,7 +58,6 @@ export const generateInterviewReport = async (req, res) => {
       conversationHistory: interview.conversation,
     });
 
-    
     const newReport = new Report({
       interviewId: interview._id,
       overallScore: reportData.overallScore,
@@ -47,11 +72,10 @@ export const generateInterviewReport = async (req, res) => {
 
     await newReport.save();
 
-    
     interview.reportId = newReport._id;
     await interview.save();
 
-    return res.status(201).json(newReport);
+    return res.status(201).json(formatReportForPlan(newReport, req.user?.plan));
   } catch (error) {
     console.log("Error in generateInterviewReport:", error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -64,20 +88,13 @@ export const getInterviewReport = async (req, res) => {
 
     const report = await Report.findOne({ interviewId });
 
-    
     if (!report) {
       return res.status(404).json({ message: "No Report Found" });
     }
-    console.log("User plan:", req.user.plan);
-    if(req.user.plan==="free"){
-      return res.status(200).json({
-        overallScore:report.overallScore,
-        recommendation:report.recommendation,
-      })
-    }
-    return res.status(200).json(report);
+
+    return res.status(200).json(formatReportForPlan(report, req.user?.plan));
   } catch (error) {
     console.log("Error in getInterviewReport:", error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
-};
+};

@@ -16,10 +16,29 @@ const userSchema = new Schema({
     },
     password:{
         type:String,
-        required:true,
         minLength:8,
         select:false,
+        required:false,
     },
+    googleId:{
+        type:String,
+        index:{
+            unique:true,
+            sparse:true
+        }
+    },
+    githubId:{
+        type:String,
+        index:{
+            unique:true,
+            sparse:true
+        }
+    },
+    avatar:{
+        type:String,
+    },
+
+
     role:{
         type:String,
         enum:["user","admin"],

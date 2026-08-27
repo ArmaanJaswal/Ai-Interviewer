@@ -3,6 +3,11 @@ const { Schema } = mongoose;
 
 const candidateSchema = new Schema(
   {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
     name: {
       type: String,
       required: true,
@@ -28,6 +33,7 @@ const candidateSchema = new Schema(
     timestamps: true,
   },
 );
+
 
 const Candidate= model('Candidate',candidateSchema);
 

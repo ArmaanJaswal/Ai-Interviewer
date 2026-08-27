@@ -3,12 +3,18 @@ import { conversationSchema } from "./conversation.model.js";
 
 const interviewSessionSchema = new Schema(
   {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     candidateId: {
       type: Schema.Types.ObjectId,
       ref: "Candidate",
       required: true,
     },
     role: {
+
       type: String,
       required: true,
     },
@@ -30,7 +36,7 @@ const interviewSessionSchema = new Schema(
     },
     maxQuestions: {
       type: Number,
-      default: 10,
+      default: 3,
     },
     conversation: {
       type: [conversationSchema],

@@ -122,4 +122,37 @@ const logoutUser = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
-export { registerUser, loginUser,getMe,logoutUser};
+
+const googleCallback = async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.redirect(`${process.env.CLIENT_URL || "http://localhost:5173"}/login?error=google_auth_failed`);
+    }
+
+    const token = generateToken(req.user._id);
+    setTokenCookie(res, token);
+
+    return res.redirect(`${process.env.CLIENT_URL || "http://localhost:5173"}/dashboard`);
+  } catch (err) {
+    console.error("Google OAuth callback error:", err);
+    return res.redirect(`${process.env.CLIENT_URL || "http://localhost:5173"}/login?error=oauth_error`);
+  }
+};
+
+const githubCallback = async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.redirect(`${process.env.CLIENT_URL || "http://localhost:5173"}/login?error=github_auth_failed`);
+    }
+
+    const token = generateToken(req.user._id);
+    setTokenCookie(res, token);
+
+    return res.redirect(`${process.env.CLIENT_URL || "http://localhost:5173"}/dashboard`);
+  } catch (err) {
+    console.error("GitHub OAuth callback error:", err);
+    return res.redirect(`${process.env.CLIENT_URL || "http://localhost:5173"}/login?error=oauth_error`);
+  }
+};
+
+export { registerUser, loginUser, getMe, logoutUser, googleCallback, githubCallback };
