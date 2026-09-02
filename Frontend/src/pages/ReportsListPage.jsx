@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Header from "../components/Header";
 import { useAuth } from "../hooks/useAuth";
+import { API_BASE_URL } from "../utils/api";
 import { FileText, Search, ChevronRight, Sparkles } from "lucide-react";
 
 const ReportsListPage = () => {
@@ -15,7 +16,7 @@ const ReportsListPage = () => {
       if (!user?._id) return;
       const userKey = `hireiq_sessions_${user._id}`;
       try {
-        const res = await fetch("http://localhost:5000/api/interview/user/history", {
+        const res = await fetch(`${API_BASE_URL}/api/interview/user/history`, {
           credentials: "include",
         });
 

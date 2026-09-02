@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "./api";
+
 /**
  * Utility to load Razorpay Checkout script dynamically
  */
@@ -8,6 +10,7 @@ export const loadRazorpayScript = () => {
       return;
     }
     const script = document.createElement("script");
+    script.id = "razorpay-checkout-js";
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
     script.onload = () => {
@@ -36,7 +39,7 @@ export const initiateRazorpayPayment = async ({ user, onSuccess, onError }) => {
     }
 
     // Step 1: Create Order on Backend
-    const orderRes = await fetch("http://localhost:5000/api/payment/create-order", {
+    const orderRes = await fetch(`${API_BASE_URL}/api/payment/create-order`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +74,7 @@ export const initiateRazorpayPayment = async ({ user, onSuccess, onError }) => {
       },
       handler: async function (response) {
         try {
-          const verifyRes = await fetch("http://localhost:5000/api/payment/verify-payment", {
+          const verifyRes = await fetch(`${API_BASE_URL}/api/payment/verify-payment`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -119,7 +122,7 @@ export const initiateRazorpayPayment = async ({ user, onSuccess, onError }) => {
 
         if (confirmSandbox) {
           try {
-            const verifyRes = await fetch("http://localhost:5000/api/payment/verify-payment", {
+            const verifyRes = await fetch(`${API_BASE_URL}/api/payment/verify-payment`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({

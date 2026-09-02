@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { API_BASE_URL } from "../utils/api";
 import Header from "../components/Header";
 import { 
   Mic, 
@@ -415,7 +416,7 @@ const InterviewSessionPage = () => {
         formData.append("audio", audioBlob, "user_answer.webm");
       }
 
-      const res = await fetch(`http://localhost:5000/api/interview/${id}/answer`, {
+      const res = await fetch(`${API_BASE_URL}/api/interview/${id}/answer`, {
         method: "POST",
         body: formData,
         credentials: "include",
@@ -439,7 +440,7 @@ const InterviewSessionPage = () => {
       if (data.interviewEnded) {
         setInterviewStatus("completed");
         
-        const reportRes = await fetch(`http://localhost:5000/api/interview/${id}/report`, {
+        const reportRes = await fetch(`${API_BASE_URL}/api/interview/${id}/report`, {
           method: "POST",
           credentials: "include",
         });
@@ -591,7 +592,7 @@ const InterviewSessionPage = () => {
         localStorage.setItem(storageKey, JSON.stringify({ ...q, maxQuestions: totalQ }));
       } else {
         try {
-          const res = await fetch(`http://localhost:5000/api/interview/${id}`, {
+          const res = await fetch(`${API_BASE_URL}/api/interview/${id}`, {
             method: "GET",
             credentials: "include",
           });

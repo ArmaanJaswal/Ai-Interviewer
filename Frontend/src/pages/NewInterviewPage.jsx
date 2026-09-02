@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Header from "../components/Header";
 import { useAuth } from "../hooks/useAuth";
+import { API_BASE_URL } from "../utils/api";
 import { ArrowLeft, Plus, X } from "lucide-react";
 
 const NewInterviewPage = () => {
@@ -61,7 +62,7 @@ const NewInterviewPage = () => {
       const parsedExperience = getExperienceNumber(experience);
 
       // 1. Create candidate record in database with credentials
-      const candidateRes = await fetch("http://localhost:5000/api/candidate", {
+      const candidateRes = await fetch(`${API_BASE_URL}/api/candidate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -86,7 +87,7 @@ const NewInterviewPage = () => {
       }
 
       // 2. Initialize interview session using candidateId
-      const interviewRes = await fetch("http://localhost:5000/api/interview", {
+      const interviewRes = await fetch(`${API_BASE_URL}/api/interview`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ candidateId }),
@@ -140,7 +141,7 @@ const NewInterviewPage = () => {
       navigate(`/interview/${interviewId}`);
     } catch (error) {
       console.error("Create candidate/interview failed:", error);
-      setErrorMsg(error.message || "Something went wrong. Make sure the backend is running at http://localhost:5000");
+      setErrorMsg(error.message || "Something went wrong. Please check your connection and try again.");
     } finally {
       setLoading(false);
     }

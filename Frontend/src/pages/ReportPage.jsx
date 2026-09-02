@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import Header from "../components/Header";
+import { API_BASE_URL } from "../utils/api";
 import { 
   ArrowLeft, 
   Sparkles, 
@@ -59,14 +60,14 @@ const ReportPage = () => {
     setLoading(true);
     setErrorMsg("");
     try {
-      const res = await fetch(`http://localhost:5000/api/interview/${id}/report`, {
+      const res = await fetch(`${API_BASE_URL}/api/interview/${id}/report`, {
         credentials: "include",
       });
 
       if (!res.ok) {
         if (res.status === 404) {
           // If report not found, try generating it
-          const genRes = await fetch(`http://localhost:5000/api/interview/${id}/report`, {
+          const genRes = await fetch(`${API_BASE_URL}/api/interview/${id}/report`, {
             method: "POST",
             credentials: "include",
           });

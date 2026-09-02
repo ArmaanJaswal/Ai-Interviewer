@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import Header from "../components/Header";
+import { API_BASE_URL } from "../utils/api";
 import { initiateRazorpayPayment } from "../utils/razorpay";
 import { 
   Sparkles, 
@@ -32,7 +33,7 @@ const DashboardPage = () => {
       
       const userKey = `hireiq_sessions_${user._id}`;
       try {
-        const res = await fetch("http://localhost:5000/api/interview/user/history", {
+        const res = await fetch(`${API_BASE_URL}/api/interview/user/history`, {
           credentials: "include",
         });
 

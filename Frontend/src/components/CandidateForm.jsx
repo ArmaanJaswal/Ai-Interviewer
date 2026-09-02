@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../utils/api";
 
 const CandidateForm = ({ onSuccessSubmit }) => {
   const [name, setName] = useState("");
@@ -21,16 +22,15 @@ const CandidateForm = ({ onSuccessSubmit }) => {
         .filter((skill) => skill !== "");
 
       const response = await axios.post(
-        "http://localhost:5000/api/candidate",
+        `${API_BASE_URL}/api/candidate`,
         {
           name,
           role,
           skills: skillsArray,
           experience: Number(experience),
-        }
+        },
+        { withCredentials: true }
       );
-
-      console.log(response.data);
 
       setName("");
       setRole("");
@@ -43,7 +43,7 @@ const CandidateForm = ({ onSuccessSubmit }) => {
       }
     } catch (error) {
       console.log("Error Submitting Form", error);
-      setErrorMsg("Submission failed. Make sure the backend is running at http://localhost:5000");
+      setErrorMsg("Submission failed. Please check your connection and try again.");
     } finally {
       setLoading(false);
     }

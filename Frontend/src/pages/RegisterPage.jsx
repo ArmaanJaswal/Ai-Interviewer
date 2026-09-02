@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { ShieldCheck, Sparkles, CheckCircle2 } from "lucide-react";
+import { API_BASE_URL } from "../utils/api";
 
 const RegisterPage = () => {
   const [searchParams] = useSearchParams();
@@ -20,13 +21,11 @@ const RegisterPage = () => {
   }, [searchParams]);
 
   const handleGoogleSignup = () => {
-    const apiUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
-    window.location.href = `${apiUrl}/api/auth/google`;
+    window.location.href = `${API_BASE_URL}/api/auth/google`;
   };
 
   const handleGitHubSignup = () => {
-    const apiUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
-    window.location.href = `${apiUrl}/api/auth/github`;
+    window.location.href = `${API_BASE_URL}/api/auth/github`;
   };
 
   return (
