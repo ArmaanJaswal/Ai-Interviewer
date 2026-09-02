@@ -63,7 +63,7 @@ export const initiateRazorpayPayment = async ({ user, onSuccess, onError }) => {
       currency: orderData.currency || "INR",
       name: "HireIQ AI Interviewer",
       description: "5 Premium AI Interviews + Detailed Reports (₹179)",
-      image: "https://cdn-icons-png.flaticon.com/512/9187/9187604.png",
+      image: window.location.origin ? `${window.location.origin}/logo.svg` : "/logo.svg",
       ...(isSimulated ? {} : { order_id: orderData.orderId }),
       prefill: {
         name: user?.name || orderData.prefill?.name || "",
