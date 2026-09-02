@@ -25,7 +25,7 @@ const InterviewSessionPage = () => {
 
   // Interview state
   const [questionNumber, setQuestionNumber] = useState(1);
-  const [maxQuestions, setMaxQuestions] = useState(user?.plan === "premium" ? 10 : 3);
+  const [maxQuestions, setMaxQuestions] = useState(10);
   const [questionText, setQuestionText] = useState("");
   const [topic, setTopic] = useState("");
   const [difficulty, setDifficulty] = useState("medium");
@@ -571,7 +571,7 @@ const InterviewSessionPage = () => {
     const cachedQuestion = localStorage.getItem(storageKey);
 
     const loadState = async () => {
-      const defaultMax = user?.plan === "premium" ? 10 : 3;
+      const defaultMax = 10;
 
       if (cachedQuestion) {
         const q = JSON.parse(cachedQuestion);

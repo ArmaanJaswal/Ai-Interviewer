@@ -33,7 +33,6 @@ export async function transcribeAudio(file) {
     });
 
     const resultText = (transcription.text || "").trim();
-    console.log("Whisper Transcribed Result:", resultText);
     return resultText;
   } catch (error) {
     console.error("OpenAI Whisper transcription error:", error);

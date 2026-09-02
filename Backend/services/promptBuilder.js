@@ -101,7 +101,7 @@ Follow these rules strictly:
 - Generate exactly one next question.
 - Write in natural, plain spoken conversational English.
 - DO NOT use markdown formatting, backticks (\`), asterisks (*), slashes (/), hashes (#), or code block symbols in questionText, as it is read aloud by a voice synthesizer.
-- Set shouldEndInterview to true if 3 or more questions have been asked, or if the candidate has shown a clear and consistent performance pattern across enough topics to make a hiring judgment.
+- Set shouldEndInterview to true if 10 or more questions have been asked, or if the candidate has shown a clear and consistent performance pattern across enough topics to make a hiring judgment.
 - Your output must conform exactly to the required JSON schema.`;
 
   const historyText = formatConversationHistory(conversationHistory);

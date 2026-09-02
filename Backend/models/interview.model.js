@@ -36,7 +36,7 @@ const interviewSessionSchema = new Schema(
     },
     maxQuestions: {
       type: Number,
-      default: 3,
+      default: 10,
     },
     conversation: {
       type: [conversationSchema],

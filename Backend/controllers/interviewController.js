@@ -21,8 +21,7 @@ const createInterview = async (req, res) => {
       experience: candidate.experience,
     });
 
-    const isPremium = req.user?.plan === "premium";
-    const maxQuestions = isPremium ? 10 : 3;
+    const maxQuestions = MAX_QUESTIONS || 10;
 
     const newInterview = new Interview({
       userId: req.user._id,
@@ -187,7 +186,7 @@ const getInterview = async (req, res) => {
       interviewId: interview._id,
       status: interview.status,
       questionNumber: interview.currentQuestionNumber,
-      maxQuestions: interview.maxQuestions || (req.user?.plan === "premium" ? 10 : 3),
+      maxQuestions: interview.maxQuestions || 10,
       questionText: currentQuestion.questionText,
       topic: currentQuestion.topic,
       difficulty: currentQuestion.difficulty,
